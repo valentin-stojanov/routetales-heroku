@@ -1,6 +1,7 @@
 package com.myproject.project.model.entity;
 
 import com.myproject.project.model.enums.LevelEnum;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class RouteEntity {
     private String description;
 
 //    @Lob
+    @Type( type = "org.hibernate.type.TextType")
     private String gpxCoordinates;
 
     @Enumerated(EnumType.STRING)

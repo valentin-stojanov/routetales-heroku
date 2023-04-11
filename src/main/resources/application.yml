@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/myproject?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&charset=utf8mb4&collation=utf8mb4_unicode_ci
+    username: root
+    password:
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    open-in-view: false
+    properties:
+      hibernate:
+#        generate_statistics: true
+#        use_sql_comments: true
+#        format_sql: true
+##        show SQL statements only if needed!
+#        show_sql: true
+#        type: trace
+
+  #Cloudinary Properties
+cloudinary:
+  api-key: 579953547744991
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: trippictures
+
+  #Loggers
+logging:
+  level:
+    org.springframework: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: Trace
+#    sql: debug

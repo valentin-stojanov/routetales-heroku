@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myproject?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&charset=utf8mb4&collation=utf8mb4_unicode_ci
-    username: root
-    password:
+    driverClassName: org.postgresql.Driver
+    url: ${JDBC_DATABASE_URL:}
+    username: ${JDBC_DATABASE_USERNAME:}
+    password: ${JDBC_DATABASE_PASSWORD:}
 
   servlet:
     multipart:
@@ -19,7 +19,7 @@ spring:
       encoding: UTF-8
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
@@ -46,3 +46,6 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: Trace
 #    sql: debug
+
+server:
+  port=${PORT:8080}

@@ -20,7 +20,7 @@ public class RouteEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Lob
+//    @Lob
     private String gpxCoordinates;
 
     @Enumerated(EnumType.STRING)

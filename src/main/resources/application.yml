@@ -36,7 +36,7 @@ spring:
   #Cloudinary Properties
 cloudinary:
   api-key: 579953547744991
-  api-secret: ${CLOUDINARY_API_SECRET}
+  api-secret: ${CLOUDINARY_API_SECRET:}
   cloud-name: trippictures
 
   #Loggers
@@ -46,5 +46,5 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: Trace
 #    sql: debug
- server:
-  port: {$PORT:8080}
+server:
+  port: ${PORT:8080}

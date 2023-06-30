@@ -33,7 +33,7 @@ function asComment(c) {
     return commentHtml;
 }
 
-fetch(`http://localhost:8080/api/${routeId}/comments`)
+fetch(`https://www.routetales.eu/api/${routeId}/comments`)
     .then(response => response.json())
     .then(data => {
         for (const comment of data) {

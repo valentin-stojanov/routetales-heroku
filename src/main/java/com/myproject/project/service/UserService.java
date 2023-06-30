@@ -159,7 +159,7 @@ public class UserService {
         UserEntity user = generatePasswordResetTokenForUser(email);
         String resetToken = user.getPasswordResetToken().getResetToken();
 
-        return "http://localhost:8080/users/reset-password/reset/" + resetToken;
+        return "https://www.routetales.eu/users/reset-password/reset/" + resetToken;
     }
 
     public void resetPasswordWithResetToken(String token, UserResetPasswordDto userResetPasswordDto) {

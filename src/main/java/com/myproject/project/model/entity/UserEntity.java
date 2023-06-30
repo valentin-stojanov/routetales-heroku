@@ -10,23 +10,38 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "users_id_seq",
+    allocationSize = 10)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "users_id_seq")
     private Long id;
 
     private String firstName;
     private String lastName;
-    @Positive
+    //    @Positive
     private int age;
 
     @NotBlank
     private String password;
 
-    @Column(unique = true)
+    //    @Column(unique = true)
     @NotBlank
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<RoleEntity> roles = new ArrayList<>();
+
+    @OneToOne
+    private PasswordResetTokenEntity passwordResetToken;
+
+    public PasswordResetTokenEntity getPasswordResetToken() {
+        return passwordResetToken;
+    }
+
+    public UserEntity setPasswordResetToken(PasswordResetTokenEntity passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
+        return this;
+    }
 
     public Long getId() {
         return id;

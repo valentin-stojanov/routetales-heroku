@@ -13,7 +13,10 @@ import java.util.Set;
 @Table(name = "routes")
 public class RouteEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "routes_id_seq",
+    allocationSize = 10)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "routes_id_seq")
     private Long id;
 
     private String name;
@@ -21,8 +24,9 @@ public class RouteEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-//    @Lob
-    @Type( type = "org.hibernate.type.TextType")
+    //    @Lob
+//    @Type(type = "org.hibernate.type.TextType")
+    @Column(columnDefinition = "TEXT")
     private String gpxCoordinates;
 
     @Enumerated(EnumType.STRING)

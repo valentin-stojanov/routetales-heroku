@@ -26,12 +26,12 @@ public class UserController {
     private final EmailService emailService;
 
     @ModelAttribute("userResetEmailModel")
-    public UserResetEmailDto initUserResetEmailModel(){
+    public UserResetEmailDto initUserResetEmailModel() {
         return new UserResetEmailDto();
     }
 
     @ModelAttribute("userResetPasswordModel")
-    public UserResetPasswordDto initUserResetPasswordModel(){
+    public UserResetPasswordDto initUserResetPasswordModel() {
         return new UserResetPasswordDto();
     }
 
@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping("/login-error")
     public String onFailedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
-                                RedirectAttributes redirectAttributes){
+                                RedirectAttributes redirectAttributes) {
         redirectAttributes.
                 addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username)
                 .addFlashAttribute("bad_credentials", true);
@@ -60,14 +60,14 @@ public class UserController {
                                 BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes
                     .addFlashAttribute("userResetEmailModel", userResetEmailModel)
                     .addFlashAttribute("invalid_email", true)
                     .addFlashAttribute("org.springframework.validation.BindingResult.userResetEmailModel", bindingResult);
             return "redirect:/users/login";
         }
-
+        this.userService.checkTypeOfRegistration(userResetEmailModel.getEmail());
         String resetUrl = this.userService.generateResetUrl(userResetEmailModel.getEmail());
         this.emailService.sendResetPasswordEmail(userResetEmailModel.getEmail(), resetUrl);
 
@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @GetMapping("/reset-password/reset/{token}")
-    public String onResetPassword(@PathVariable("token") String token, Model model){
+    public String onResetPassword(@PathVariable("token") String token, Model model) {
         model.addAttribute("resetToken", token);
         return "reset-password";
     }
@@ -86,22 +86,20 @@ public class UserController {
     public String onResetPassword(@PathVariable("token") String token,
                                   @Valid UserResetPasswordDto userResetPasswordModel,
                                   BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes){
-        if (bindingResult.hasErrors()){
+                                  RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes
                     .addFlashAttribute("userResetPasswordModel", userResetPasswordModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.userResetPasswordModel", bindingResult);
 
             return "redirect:/users/reset-password/reset/{token}";
         }
-
         this.userService.resetPasswordWithResetToken(token, userResetPasswordModel);
         return "redirect:/users/login";
     }
 
-
     @GetMapping("/profile")
-    public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserViewModel userViewModel = this.userService.getUserInfo(userDetails.getUsername());
         model.addAttribute("userView", userViewModel);
         return "profileN";
@@ -109,7 +107,7 @@ public class UserController {
 
     @ExceptionHandler({IllegalStateException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ModelAndView onIllegalState(IllegalStateException ise){
+    public ModelAndView onIllegalState(IllegalStateException ise) {
         ModelAndView modelAndView = new ModelAndView("reset-password-error");
         modelAndView.addObject("error", ise.getMessage());
 

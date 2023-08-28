@@ -36,7 +36,6 @@ public class SecurityConfig {
                         "/users/register",
                         "/users/reset-password",
                         "/users/reset-password/reset/**",
-                        "http://bgmtile.uni-plovdiv.net:40158/**",
                         "/route").permitAll().
                 // all other pages are available for logger in users
                         anyRequest().

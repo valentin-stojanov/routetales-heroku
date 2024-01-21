@@ -36,7 +36,8 @@ public class SecurityConfig {
                         "/users/register",
                         "/users/reset-password",
                         "/users/reset-password/reset/**",
-                        "/route").permitAll().
+                        "/routes",
+                        "/routes/details/**").permitAll().
                 // all other pages are available for logger in users
                         anyRequest().
                 authenticated().
